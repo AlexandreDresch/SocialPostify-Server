@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { PostService } from './post.service';
+import { PostController } from './post.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { UsersService } from 'src/users/users.service';
 import { UsersRepository } from 'src/users/repository/users.repository';
 import { PrismaUsersRepository } from 'src/users/repository/implementations/prismaUsers.repository';
-import { UsersService } from 'src/users/users.service';
-import { JwtModule } from '@nestjs/jwt';
-import { PostService } from 'src/post/post.service';
-import { PostRepository } from 'src/post/repository/post.repository';
-import { PrismaPostRepository } from 'src/post/repository/implementations/prismaPosts.repository';
+import { AuthService } from 'src/auth/auth.service';
+import { PostRepository } from './repository/post.repository';
+import { PrismaPostRepository } from './repository/implementations/prismaPosts.repository';
 
 @Module({
   imports: [
@@ -15,19 +15,19 @@ import { PrismaPostRepository } from 'src/post/repository/implementations/prisma
       secret: process.env.JWT_SECRET,
     }),
   ],
-  controllers: [AuthController],
+  controllers: [PostController],
   providers: [
-    AuthService,
     UsersService,
-    PostService,
     {
       provide: UsersRepository,
       useClass: PrismaUsersRepository,
     },
+    AuthService,
+    PostService,
     {
       provide: PostRepository,
       useClass: PrismaPostRepository,
     },
   ],
 })
-export class AuthModule {}
+export class PostModule {}

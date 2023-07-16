@@ -27,6 +27,7 @@ model Posts {
   User          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   image         String
   title         String
+  text          String
   dateToPublish DateTime
   published     Boolean
   socialMedia   String

@@ -7,7 +7,8 @@ import { PostRepository } from './repository/post.repository';
 export class PostService {
   constructor(private readonly postRepository: PostRepository) {}
   async create(data: CreatePostDto, userId: number) {
-    const post = await this.postRepository.findByTitle(data.title);
+    const post = await this.postRepository.findByTitle(data.title, userId);
+    console.log(post);
 
     if (post) {
       throw new HttpException(

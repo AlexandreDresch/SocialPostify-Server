@@ -15,7 +15,9 @@ export class PrismaPostRepository implements PostRepository {
     return await this.prisma.posts.findMany({ where: { userId } });
   }
 
-  async findByTitle(title: string) {
-    return await this.prisma.posts.findFirst({ where: { title } });
+  async findByTitle(title: string, userId: number) {
+    return await this.prisma.posts.findFirst({
+      where: { title: title, userId: userId },
+    });
   }
 }
